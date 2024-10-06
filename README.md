@@ -17,10 +17,9 @@
 
 #### Визуализация архитектуры
 
-##### [«C4 — Уровень контейнеров (Containers)»](./docs/...)
-##### [«C4 — Уровень компонентов (Components)»](./docs/...)
-##### [«C4 — Уровень кода (Code)»](./docs/...)
-##### [«C4 — Уровень контейнеров (Containers)»](./docs/...)
+##### [«C4 — Уровень контейнеров (Containers)»](./docs/smart-home-microservices.md#c4--%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80%D0%BE%D0%B2-containers)
+##### [«C4 — Уровень компонентов (Components)»](./docs/smart-home-microservices.md#c4--%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C-%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-components)
+##### [«C4 — Уровень кода (Code)»](./docs/smart-home-microservices.md#c4--%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C-%D0%BA%D0%BE%D0%B4%D0%B0-code)
 
 ### Подзадание 1.3 ER-диаграмма
 

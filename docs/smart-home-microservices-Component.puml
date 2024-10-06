@@ -1,0 +1,54 @@
+@startuml
+!include C4.puml
+!include C4_Context.puml
+!include C4_Container.puml
+!include C4_Component.puml
+
+title Smart Home System Component Diagram
+
+top to bottom direction
+
+Container_Boundary(SmartHomeSystem, "Smart Home System") {
+  Container(APIGateway, "API Gateway", "Java, Spring", "Handles user interactions")
+  Container(Management, "Management microservice", "Java, Spring", "Management devices")
+  Container(Telemetry, "Telemetry microservice", "Java, Spring", "Telemetry from sensors")
+  Container(ManagementDatabase, "Management Database", "PostgreSQL", "Stores management and state of devices")
+  Container(Kafka, "Kafka", "Apache Kafka", "Event bus")
+  Container(TelemetryDatabase, "Telemetry Database", "PostgreSQL", "Stores telemetry data")
+}
+
+Container(APIGateway, "API Gateway", "Java, Spring") {
+  Component(AuthController, "AuthController", "Handles authentication and authorization")
+  Component(SmartHomeController, "SmartHomeController", "Handles user interactions")
+  Component(ServiceLayer, "Service Layer", "Business logic")
+}
+
+Container(Management, "Management microservice", "Java, Spring") {
+  Component(ManagementController, "Management Controller", "Handles API interactions")
+  Component(ManagementServiceLayer, "Management Service Layer", "Business logic")
+  Component(ManagementProducer, "Management Producer", "Command to devices")
+  Component(ManagementRepositoryLayer, "Management Repository Layer", "Data access logic")
+}
+
+Container(Telemetry, "Telemetry microservice", "Java, Spring") {
+  Component(TelemetryController, "Telemetry Controller", "Handles API interactions")
+  Component(TelemetryServiceLayer, "Telemetry Service Layer", "Business logic")
+  Component(TelemetryConsumer, "Telemetry Consumer", "Telemetry data")
+  Component(TelemetryRepositoryLayer, "Telemetry Repository Layer", "Data access logic")
+}
+
+Rel(AuthController,ServiceLayer,"Calls business logic")
+Rel(SmartHomeController,ServiceLayer,"Calls business logic")
+Rel(ServiceLayer,ManagementController,"Manage devices")
+Rel(ServiceLayer,TelemetryController,"Fetching status about sensors")
+Rel(ManagementController,ManagementServiceLayer,"Calls business logic")
+Rel(TelemetryController,TelemetryServiceLayer,"Calls business logic")
+Rel(ManagementServiceLayer,ManagementRepositoryLayer,"Reads/Writes data")
+Rel(ManagementServiceLayer,ManagementProducer,"Reads/Writes data")
+Rel(TelemetryServiceLayer,TelemetryConsumer,"Reads/Writes data")
+Rel(TelemetryServiceLayer,TelemetryRepositoryLayer,"Reads/Writes data")
+Rel(ManagementRepositoryLayer,ManagementDatabase,"Reads/Writes data")
+Rel(ManagementProducer,Kafka,"Sent command to devices")
+Rel(TelemetryConsumer,Kafka,"Collect telemetry data from sensors")
+Rel(TelemetryRepositoryLayer,TelemetryDatabase,"Reads/Writes data")
+@enduml

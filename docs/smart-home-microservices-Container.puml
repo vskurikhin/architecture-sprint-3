@@ -1,0 +1,33 @@
+@startuml
+!include C4.puml
+!include C4_Context.puml
+!include C4_Container.puml
+!include C4_Component.puml
+
+title Smart Home Container Diagram
+
+top to bottom direction
+
+Person(user, "User", "A user of the Smart Home")
+System(SmartHomeSystem, "Smart Home System", "System managing memberships, schedules, and payments")
+
+Container_Boundary(SmartHomeSystem, "Smart Home System") {
+  Container(APIGateway, "API Gateway", "Java, Spring", "Handles user interactions")
+  Container(Management, "Management Microservice", "Java, Spring", "Management devices")
+  Container(Telemetry, "Telemetry Microservice", "Java, Spring", "Telemetry from sensors")
+  Container(DatabaseManagement, "Database Management", "PostgreSQL", "Stores management and state of devices")
+  Container(DatabaseTelemetry, "Database Telemetry", "PostgreSQL", "Stores telemetry data")
+  Container(Kafka, "Kafka", "Apache Kafka", "Event bus")
+}
+
+System_Ext(sensors, "Sensors", "External sensors for processing")
+
+Rel(user, APIGateway, "Uses the system")
+Rel(APIGateway,Management,"Manage devices")
+Rel(APIGateway,Telemetry,"Fetching status about sensors")
+Rel(Management,DatabaseManagement,"Reads/Writes state of devices")
+Rel(Telemetry,DatabaseTelemetry,"Reads/Writes telemetry data")
+Rel(Management,Kafka,"Sent command to devices")
+Rel(Telemetry,Kafka,"Collect telemetry data from sensors")
+Rel(sensors,Kafka,"Send telemetry")
+@enduml

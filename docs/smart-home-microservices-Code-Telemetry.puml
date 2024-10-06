@@ -1,0 +1,29 @@
+@startuml
+title Smart Home System Telemetry Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class TelemetryRepository {
+  +void find()
+  +void save()
+}
+
+class TelemetryConsumer {
+  +void receive()
+}
+
+class TelemetryService {
+  +void business()
+}
+
+class TelemetryController {
+  +void do()
+}
+
+TelemetryController "1" -- "1" TelemetryService : includes
+TelemetryService "1" -- "1" TelemetryConsumer : includes
+TelemetryService "1" -- "1" TelemetryRepository : includes
+
+@enduml
