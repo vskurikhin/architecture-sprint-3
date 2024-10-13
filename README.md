@@ -1,74 +1,42 @@
-# Базовая настройка
 
-## Запуск minikube
+# Проектная работа 3
 
-[Инструкция по установке](https://minikube.sigs.k8s.io/docs/start/)
+## [Выполнена работа над замечаниями](./docs/HOMEWORK-on-mistakes.md)
 
-```bash
-minikube start
-```
+## ЗАДАНИЕ 1 Анализ и проектирование
 
+### Подзадание 1.1 Анализ и планирование
 
-## Добавление токена авторизации GitHub
+#### [«Функциональность монолитного приложения»](./docs/smart-home-monolith-analysis.md)
+#### [«Архитектура монолитного приложения»](./docs/smart-home-monolith-analysis.md)
+#### [«Домены и границы контекстов»](./docs/smart-home-monolith-analysis.md#%D0%B4%D0%BE%D0%BC%D0%B5%D0%BD%D1%8B-%D0%B8-%D0%B3%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%BA%D1%81%D1%82%D0%BE%D0%B2)
+#### [«Контекст системы C4»](./docs/smart-home-monolith-analysis.md#%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%BA%D1%81%D1%82-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-c4)
 
-[Получение токена](https://github.com/settings/tokens/new)
+### Подзадание 1.2 Архитектура микросервисов
 
-```bash
-kubectl create secret docker-registry ghcr --docker-server=https://ghcr.io --docker-username=<github_username> --docker-password=<github_token> -n default
-```
+#### [«Декомпозиция на микросервисы»](./docs/smart-home-microservices.md)
+#### [«Определение взаимодействия»](./docs/smart-home-microservices.md)
 
+#### Визуализация архитектуры
 
-## Установка API GW kusk
+##### [«C4 — Уровень контейнеров (Containers)»](./docs/smart-home-microservices.md#c4--%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C-%D0%BA%D0%BE%D0%BD%D1%82%D0%B5%D0%B9%D0%BD%D0%B5%D1%80%D0%BE%D0%B2-containers)
+##### [«C4 — Уровень компонентов (Components)»](./docs/smart-home-microservices.md#c4--%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C-%D0%BA%D0%BE%D0%BC%D0%BF%D0%BE%D0%BD%D0%B5%D0%BD%D1%82%D0%BE%D0%B2-components)
+##### [«C4 — Уровень кода (Code)»](./docs/smart-home-microservices.md#c4--%D1%83%D1%80%D0%BE%D0%B2%D0%B5%D0%BD%D1%8C-%D0%BA%D0%BE%D0%B4%D0%B0-code)
 
-[Install Kusk CLI](https://docs.kusk.io/getting-started/install-kusk-cli)
+### Подзадание 1.3 ER-диаграмма
 
-```bash
-kusk cluster install
-```
+#### [«Идентификация сущностей»](./docs/er-diagram.md)
+#### [«Определение атрибутов»](./docs/er-diagram.md)
+#### [«Описание связей»](./docs/er-diagram.md)
 
+### Подзадание 1.4 Создание и документирование API
 
-## Настройка terraform
+#### [«Выбор типов API»](./docs/api.md)
+#### [«Проектирование API для микросервиса "Управление устройствами"»](./docs/api.md)
+#### [«Проектирование API для микросервиса "Телеметрия"»](./docs/api.md)
+#### [«Описание контрактов взаимодействия»](./docs/api.md)
+#### [«Документирование API»](./docs/api.md)
 
-[Установите Terraform](https://yandex.cloud/ru/docs/tutorials/infrastructure-management/terraform-quickstart#install-terraform)
+## ЗАДАНИЕ 2 Разработка MVP
 
-
-Создайте файл ~/.terraformrc
-
-```hcl
-provider_installation {
-  network_mirror {
-    url = "https://terraform-mirror.yandexcloud.net/"
-    include = ["registry.terraform.io/*/*"]
-  }
-  direct {
-    exclude = ["registry.terraform.io/*/*"]
-  }
-}
-```
-
-## Применяем terraform конфигурацию 
-
-```bash
-cd terraform
-terraform apply
-```
-
-## Настройка API GW
-
-```bash
-kusk deploy -i api.yaml
-```
-
-## Проверяем работоспособность
-
-```bash
-kubectl port-forward svc/kusk-gateway-envoy-fleet -n kusk-system 8080:80
-curl localhost:8080/hello
-```
-
-
-## Delete minikube
-
-```bash
-minikube delete
-```
+### Подзадание 2.1 Новые микросервисы и интеграция с монолитом

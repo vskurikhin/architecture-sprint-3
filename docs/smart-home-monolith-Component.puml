@@ -1,0 +1,29 @@
+@startuml
+!include C4.puml
+!include C4_Context.puml
+!include C4_Container.puml
+!include C4_Component.puml
+
+title Heating System Application Component Diagram
+
+top to bottom direction
+
+Container_Boundary(HeatingSystem, "Heating System") {
+  Container(App, "Application", "Java, Spring", "Handles user interactions")
+  Container(Database, "Database", "PostgreSQL", "Stores heating systems state and temperature sensors telemetry")
+}
+
+Container(App, "Application", "Java, Spring") {
+  Component(HeatingSystemController, "HeatingSystemController", "Allways Heating System API")
+  Component(ServiceLayer, "Service Layer", "Business logic")
+  Component(HeatingSystemRepository, "Heating System Repository Layer", "Heating System access logic")
+  Component(TemperatureSensorRepository, "Temperature Sensor Repository Layer", "Temperature sensors telemetry access logic")
+}
+
+Rel(HeatingSystemController, ServiceLayer, "Calls business logic")
+Rel(ServiceLayer, HeatingSystemRepository, "Reads/Writes Heating System data")
+Rel(ServiceLayer, TemperatureSensorRepository, "Reads/Writes telemetry data")
+Rel(HeatingSystemRepository, Database, "Reads/Writes data")
+Rel(TemperatureSensorRepository, Database, "Reads/Writes data")
+
+@enduml

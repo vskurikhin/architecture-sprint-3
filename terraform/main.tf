@@ -1,10 +1,11 @@
+
 terraform {
   required_providers {
-    kubernetes = {
-      source = "hashicorp/kubernetes"
-      version = "2.31.0"
+    yandex = {
+      source = "yandex-cloud/yandex"
     }
   }
+  required_version = ">= 0.13"
 }
 
 provider "kubernetes" {
