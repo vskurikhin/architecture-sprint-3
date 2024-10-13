@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: ghcr.io/yandex-practicum/architecture-sprint-3
+  repository: ghcr.io/yandex-practicum/smart-home-telemetry
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: latest
@@ -106,4 +106,4 @@ postgresql:
   auth:
     username: your_username
     password: your_password
-    database: smart_home
+    database: smart_home_telemetry

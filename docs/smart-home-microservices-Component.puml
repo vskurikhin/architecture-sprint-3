@@ -10,17 +10,24 @@ top to bottom direction
 
 Container_Boundary(SmartHomeSystem, "Smart Home System") {
   Container(APIGateway, "API Gateway", "Java, Spring", "Handles user interactions")
+  Container(Auth, Authorizations Microservice", "Java, Spring", "Management devices")
   Container(Management, "Management microservice", "Java, Spring", "Management devices")
-  Container(Telemetry, "Telemetry microservice", "Java, Spring", "Telemetry from sensors")
+  Container(Telemetry, "Telemetry microservice", "Java, Spring", "Telemetry from devices")
+  Container(AuthDatabase, "Database Authentication and authorizations", "PostgreSQL", "Authentication and authorizations users")
   Container(ManagementDatabase, "Management Database", "PostgreSQL", "Stores management and state of devices")
   Container(Kafka, "Kafka", "Apache Kafka", "Event bus")
-  Container(TelemetryDatabase, "Telemetry Database", "PostgreSQL", "Stores telemetry data")
+  Container(TelemetryDatabase, "Telemetry Database", "ClickHouse", "Stores telemetry data")
 }
 
 Container(APIGateway, "API Gateway", "Java, Spring") {
-  Component(AuthController, "AuthController", "Handles authentication and authorization")
   Component(SmartHomeController, "SmartHomeController", "Handles user interactions")
   Component(ServiceLayer, "Service Layer", "Business logic")
+}
+
+Container(Auth, "Authorizations Microservice", "Java, Spring") {
+  Component(AuthController, "Authorizations Controller", "Handles API interactions")
+  Component(AuthServiceLayer, "Authorizations Service Layer", "Business logic")
+  Component(AuthRepositoryLayer, "Authorizations Repository Layer", "Data access logic")
 }
 
 Container(Management, "Management microservice", "Java, Spring") {
@@ -37,18 +44,21 @@ Container(Telemetry, "Telemetry microservice", "Java, Spring") {
   Component(TelemetryRepositoryLayer, "Telemetry Repository Layer", "Data access logic")
 }
 
-Rel(AuthController,ServiceLayer,"Calls business logic")
 Rel(SmartHomeController,ServiceLayer,"Calls business logic")
+Rel(ServiceLayer,AuthController,"Authentication and authorizations")
 Rel(ServiceLayer,ManagementController,"Manage devices")
-Rel(ServiceLayer,TelemetryController,"Fetching status about sensors")
+Rel(ServiceLayer,TelemetryController,"Fetching status about devices")
+Rel(AuthController,AuthServiceLayer,"Calls business logic")
 Rel(ManagementController,ManagementServiceLayer,"Calls business logic")
 Rel(TelemetryController,TelemetryServiceLayer,"Calls business logic")
+Rel(AuthServiceLayer,AuthRepositoryLayer,"Reads/Writes data")
 Rel(ManagementServiceLayer,ManagementRepositoryLayer,"Reads/Writes data")
 Rel(ManagementServiceLayer,ManagementProducer,"Reads/Writes data")
 Rel(TelemetryServiceLayer,TelemetryConsumer,"Reads/Writes data")
 Rel(TelemetryServiceLayer,TelemetryRepositoryLayer,"Reads/Writes data")
+Rel(AuthRepositoryLayer,AuthDatabase,"Reads/Writes data")
 Rel(ManagementRepositoryLayer,ManagementDatabase,"Reads/Writes data")
 Rel(ManagementProducer,Kafka,"Sent command to devices")
-Rel(TelemetryConsumer,Kafka,"Collect telemetry data from sensors")
+Rel(TelemetryConsumer,Kafka,"Collect telemetry data from devices")
 Rel(TelemetryRepositoryLayer,TelemetryDatabase,"Reads/Writes data")
 @enduml

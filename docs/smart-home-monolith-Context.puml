@@ -10,13 +10,10 @@ top to bottom direction
 
 Person(user, "User", "A user of the Heating system")
 System(HeatingSystem, "Heating System API", "System managing Heating")
-System(HeatingDevice, "Heating Device", "Heating device")
 
-System_Ext(sensors, "Sensors", "External sensors")
-System_Ext(sensors, "Sensors", "External sensors")
+System_Ext(devices, "Devices", "External devices")
 
 Rel(user, HeatingSystem, "Uses the system")
-Rel(HeatingSystem, HeatingDevice, "Manage devices")
-Rel(sensors, HeatingSystem, "Sending telemetry")
+Rel(HeatingSystem, devices, "Sending telemetry")
 
 @enduml
