@@ -2,16 +2,22 @@
 # Manual edits may be lost in future updates.
 
 provider "registry.terraform.io/hashicorp/helm" {
-  version = "2.14.0"
+  version = "2.16.0"
   hashes = [
-    "h1:8Vt9264v3UE6mHLRG8yiteVl5h8ZSTkJXf1xdVLa7GA=",
+    "h1:DdCtGLzdYptklsULtsF94PCWJMNYy1fclyzgIhxZ4aY=",
   ]
 }
 
 provider "registry.terraform.io/hashicorp/kubernetes" {
-  version     = "2.31.0"
-  constraints = "2.31.0"
+  version = "2.33.0"
   hashes = [
-    "h1:ZlKkkHJrjF4AiMueI2yA+abBc1c37cfwjyxURdLKhEw=",
+    "h1:Z2R1cnALV1BgzldRWir/TUvg10gkWSdEGsYJHFqD3bc=",
+  ]
+}
+
+provider "registry.terraform.io/yandex-cloud/yandex" {
+  version = "0.130.0"
+  hashes = [
+    "h1:icScUR3WtRFnxv8/nNGddryucfyT3PBj4nzh/KCsxBA=",
   ]
 }

@@ -1,0 +1,29 @@
+@startuml
+title Smart Home System Management Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class ManagementRepository {
+  +void find()
+  +void save()
+}
+
+class ManagementProducer {
+  +void sent()
+}
+
+class ManagementService {
+  +void business()
+}
+
+class ManagementController {
+  +void do()
+}
+
+ManagementController "1" -- "1" ManagementService : includes
+ManagementService "1" -- "1" ManagementProducer : includes
+ManagementService "1" -- "1" ManagementRepository : includes
+
+@enduml

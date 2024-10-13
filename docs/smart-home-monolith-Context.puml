@@ -1,0 +1,19 @@
+@startuml
+!include C4.puml
+!include C4_Context.puml
+!include C4_Container.puml
+!include C4_Component.puml
+
+title Heating System Context Diagram
+
+top to bottom direction
+
+Person(user, "User", "A user of the Heating system")
+System(HeatingSystem, "Heating System API", "System managing Heating")
+
+System_Ext(devices, "Devices", "External devices")
+
+Rel(user, HeatingSystem, "Uses the system")
+Rel(HeatingSystem, devices, "Sending telemetry")
+
+@enduml

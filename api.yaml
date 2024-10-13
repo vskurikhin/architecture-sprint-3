@@ -4,19 +4,66 @@ info:
   version: 0.1.0
 
 paths:
-  /hello:
-    get:
+  /api/v1/login:
+    post:
       responses:
         '200':
-          description: A simple hello world!
+          description: A simple login!
           content:
             text/plain:
               schema:
                 type: string
-              example: Hello from a mocked response!
+              example: Login from a mocked response!
       x-kusk:
         upstream:
           service:
-            name: hello-world-svc
+            name: smart-home-auth
+            namespace: default
+            port: 8080
+  /api/v1/devices:
+    get:
+      responses:
+        '200':
+          description: A simple management!
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Management from a mocked response!
+      x-kusk:
+        upstream:
+          service:
+            name: smart-home-management
+            namespace: default
+            port: 8080
+    put:
+      responses:
+        '200':
+          description: A simple management!
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Management from a mocked response!
+      x-kusk:
+        upstream:
+          service:
+            name: smart-home-management
+            namespace: default
+            port: 8080
+  /api/v1/telemetry/devices:
+    get:
+      responses:
+        '200':
+          description: A simple telemetry!
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: Telemetry from a mocked response!
+      x-kusk:
+        upstream:
+          service:
+            name: smart-home-telemetry
             namespace: default
             port: 8080
